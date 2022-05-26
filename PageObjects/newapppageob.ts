@@ -11,7 +11,8 @@ export class NewAppPageOb extends BasePageOb{
 
     public readonly buildYourOwnSpan:string = "//h5[contains(text(),'Build your own')]";
     public readonly newAppName:string = "input[name$='name']";
-    public readonly createAppButton:string = "button[type='submit']";
+    public readonly createAppButton:string = "//button[contains(text(),'Create')]";
+                                            
 
     //#endregion
        

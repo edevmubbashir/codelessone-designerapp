@@ -9,6 +9,7 @@ export class NewEntityPageOB extends BasePageOb{
      // public readonly entityModalCancelBtn:string = "//button[contains(text(),'Cancel')]";
      // public readonly entityModalCreateAndNewBtn:string = "//button[contains(text(),'Create and New')]";
      // public readonly entityModalCreateBtn:string = "//button[text()='Create']";
-     public readonly entitySuccessBackToEntity = "//button[@title='Back to entities']";
+     public readonly entitySuccessBackToEntity = "//button[@title='Back to Entities']";
+     //Back to Entities
 
 }
