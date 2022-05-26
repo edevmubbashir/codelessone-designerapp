@@ -1,6 +1,3 @@
-node_modules/
-/test-results/
-/playwright-report/
 /dist-pw/
 /test-results/
 /playwright-report/
