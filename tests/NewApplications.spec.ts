@@ -36,6 +36,7 @@ const ENTITY_NAMES = ["Entity01",
 
 const ATTRIBUTES_NAMES = ["Attribute01",
 "Attribute02",
+"Attribute03"
 ];
 
 const ATTRIBUTE_TYPE = [
@@ -82,6 +83,12 @@ test.describe('Designer Events', async () =>{
     await attributePage.AddNewAttribute(ATTRIBUTES_NAMES[0],ATTRIBUTE_TYPE[0]);
     await attributePage.AddNewAttribute(ATTRIBUTES_NAMES[1],ATTRIBUTE_TYPE[1]);
 
+    
+  })
+
+  test('To Verify Entity Relation One to Many', async() =>{
+  
+    //  ABDUL REHMAN WILL WORK ON IT.
     
   })
 
