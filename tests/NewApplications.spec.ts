@@ -82,7 +82,7 @@ test.describe('Designer Events', async () =>{
     await attributePage.AddNewAttribute(ATTRIBUTES_NAMES[0],ATTRIBUTE_TYPE[0]);
     await attributePage.AddNewAttribute(ATTRIBUTES_NAMES[1],ATTRIBUTE_TYPE[1]);
 
-    await Driver.page.pause();
+    
   })
 
 })
