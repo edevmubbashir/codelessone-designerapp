@@ -12,9 +12,7 @@ export default class NewEntityRelationsService extends Driver {
   }
 
   private async ClickOnNewRelationButton() {
-    await Driver.findElement(
-      newEntityRelationshipPO.newEntityRelations
-    ).click();
+    await Driver.findElement(newEntityRelationshipPO.newEntityRelations).click();
     await Driver.findElement(newEntityRelationshipPO.addItemClass).click();
   }
 

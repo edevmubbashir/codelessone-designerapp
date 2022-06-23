@@ -21,21 +21,23 @@ test.beforeAll(async () => {
   const accoutnSignUp = new LoginService(Driver.page);
 
   //  USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
-  await accoutnSignUp.LoginToCodelessOne(url, username, password);
+  //await accoutnSignUp.LoginToCodelessOne(url, username, password);
 
   // USE BELOW METHOD IF WE WANT TO CREAT ENTITIES ON ALREADY CREATED APPLICATION
-  // await accoutnSignUp.LoginAndOpenSpecificOrgAndProject(
-  //   url,
-  //   orgName,
-  //   AppName,
-  //   username,
-  //   password
-  // );
+  await accoutnSignUp.LoginAndOpenSpecificOrgAndProject(url,orgName,AppName,username,password);
 });
 
-const ENTITY_NAMES = ["Entity01", "Entity02", "Entity03"];
+const ENTITY_NAMES = [
+  "Entity01",
+  "Entity02",
+  "Entity03"
+];
 
-const ATTRIBUTES_NAMES = ["Attribute01", "Attribute02", "Attribute03"];
+const ATTRIBUTES_NAMES = [
+ "Attribute01",
+ "Attribute02",
+ "Attribute03"
+];
 
 const ATTRIBUTE_TYPE = [
   "Text",
@@ -53,14 +55,14 @@ test.describe("Designer Events", async () => {
   const genralMethods = new GeneralMethodServices(Driver.page);
   const attributePage = new NewAttributeService(Driver.page);
 
-  test("To Verify Application Creation", async () => {
+  test.skip("To Verify Application Creation", async () => {
     var appName = MainCall.GetAppName();
     const newApp = new NewApplicationService(Driver.page);
 
     await newApp.CreateNewApplication(appName);
   });
 
-  test("Shared Steps: To Verify Entity Creation", async () => {
+  test.skip("Shared Steps: To Verify Entity Creation", async () => {
     const newEntity = new NewEntityService(Driver.page);
     console.log(ENTITY_NAMES[0]);
 
@@ -68,7 +70,7 @@ test.describe("Designer Events", async () => {
     await newEntity.CreateNewEntityViaCreateButton(ENTITY_NAMES[1]);
   });
 
-  test("To Verify First Attribute Creation Of An Entity", async () => {
+  test.skip("To Verify First Attribute Creation Of An Entity", async () => {
     await entityPage.SelectEntityFromGrid(ENTITY_NAMES[0], false);
 
     await attributePage.AddNewAttribute(ATTRIBUTES_NAMES[0], ATTRIBUTE_TYPE[0]);
@@ -78,5 +80,10 @@ test.describe("Designer Events", async () => {
   test("To Verify Entity Relation One to Many", async () => {
     const entityRelationPage = new NewEntityRelationsService(Driver.page);
     await entityRelationPage.CreateOneToManyEntityRelationship();
+  });
+
+  test("To Verify Publish Application is successfull", async () => {
+    // const entityRelationPage = new NewEntityRelationsService(Driver.page);
+    // await entityRelationPage.CreateOneToManyEntityRelationship();
   });
 });
