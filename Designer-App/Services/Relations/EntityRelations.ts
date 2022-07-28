@@ -1,4 +1,4 @@
-import Driver from "../../Main/Driver";
+import Driver from "../../../Main/Driver";
 import { NewEntityRelationshipPageOB } from "../../PageObjects/newentityrelationshippageob";
 
 const newEntityRelationshipPO = new NewEntityRelationshipPageOB();

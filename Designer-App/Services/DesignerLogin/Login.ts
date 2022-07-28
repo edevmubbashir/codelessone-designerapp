@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import Driver from "../../Main/Driver";
+import Driver from "../../../Main/Driver";
 import { LoginPageOb } from "../../PageObjects/loginpageob";
 import { NewAppPageOb } from "../../PageObjects/newapppageob";
 
@@ -13,15 +13,15 @@ export default class LoginService extends Driver{
         await Driver.navigateToURL(url);
         await Driver.waitForNavigation();
 
-        expect(Driver.waitToExpectElement(loginPO.emailaddress).toBeVisible());
-        expect(Driver.waitToExpectElement(loginPO.password).toBeVisible());
+        await Driver.waitToExpectElement(loginPO.emailaddress).toBeVisible();
+        await Driver.waitToExpectElement(loginPO.password).toBeVisible();
 
         
         await Driver.findElement(loginPO.emailaddress).fill(userName)
         await Driver.findElement(loginPO.password).fill(password)
 
 
-        expect(Driver.waitToExpectElement(loginPO.submitButton).toBeVisible());
+        await Driver.waitToExpectElement(loginPO.submitButton).toBeVisible();
         await Driver.findElement(loginPO.submitButton).click();
 
         await Driver.waitForNavigation();
@@ -34,15 +34,16 @@ export default class LoginService extends Driver{
         await Driver.navigateToURL(url);
         await Driver.waitForNavigation();
 
-        expect(Driver.waitToExpectElement(loginPO.emailaddress).toBeVisible());
-        expect(Driver.waitToExpectElement(loginPO.password).toBeVisible());
+        await Driver.waitToExpectElement(loginPO.emailaddress).toBeVisible();
+        await Driver.waitToExpectElement(loginPO.password).toBeVisible();
 
         
         await Driver.findElement(loginPO.emailaddress).fill(userName)
         await Driver.findElement(loginPO.password).fill(password)
 
 
-        expect(Driver.waitToExpectElement(loginPO.submitButton).toBeVisible());
+        await Driver.waitToExpectElement(loginPO.submitButton).toBeVisible()
+        ;
         await Driver.findElement(loginPO.submitButton).click();
 
         await Driver.waitForNavigation();

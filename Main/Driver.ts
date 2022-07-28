@@ -1,4 +1,4 @@
-import { chromium, expect, Locator, Page } from "@playwright/test";
+import { chromium, expect, Locator, Page, selectors } from "@playwright/test";
 
 
 class Driver{
@@ -19,13 +19,12 @@ class Driver{
     }
 
      /* This is generic method to locate any element on the page */
-    static findElement(locator: string) {
+    static  findElement(locator: string) {
         return this.page.locator(locator);
     }
 
-    static findElements(locator:string,){
-        return this.page.$$(locator);
-    }
+    
+
 
     static findElementWithOptions(locator:string, options: { has?: Locator; hasText?: string | RegExp; }){
         return this.page.locator(locator,options);
@@ -40,8 +39,9 @@ class Driver{
     }
 
     static async waitForSelector(locator:string){
-        await this.page.waitForSelector(locator);
+        await (await this.page.waitForSelector(locator)).isVisible();
     }
+    
     
      /* This method wait to assert an element on the page */
      static waitToExpectElement(locator: string) {

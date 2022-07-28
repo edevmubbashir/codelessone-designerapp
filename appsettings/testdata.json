@@ -1,0 +1,22 @@
+{
+  "ENTITY_NAMES": {
+    "0": "Entity01",
+    "1": "Entity02",
+    "2": "Entity03"
+  },
+  "ATTRIBUTES_NAMES": {
+    "0": "Attribute01",
+    "1": "Attribute02",
+    "2": "Attribute03"
+  },
+  "ATTRIBUTE_TYPE": {
+    "Txt": "Text",
+    "Num": "Number",
+    "DropD": "Dropdown",
+    "Date": "Date Time",
+    "UserId": "User Identity",
+    "Email": "Email",
+    "Link": "Link",
+    "RichCon": "Rich Content"
+  }
+}

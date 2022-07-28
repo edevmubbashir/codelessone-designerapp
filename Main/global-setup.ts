@@ -1,15 +1,15 @@
-import { UserCredentials } from "../appsettings/variables";
-import LoginService from "../Services/Login";
-import Driver from "./Driver";
+// import { UserCredentials } from "../appsettings/variables";
+// import LoginService from "../../Designer-App/Services/Login";
+// import Driver from "./Driver";
 
-module.exports = async () => {
+// module.exports = async () => {
 
-    const username = UserCredentials.userName;
-    const password = UserCredentials.userPassword;
-    const url = UserCredentials.baseUrl;
+//     const username = UserCredentials.userName;
+//     const password = UserCredentials.userPassword;
+//     const url = UserCredentials.baseUrl;
 
-    const page = await Driver.openNewBrowser();
-    const accoutnSignUp = new LoginService(page);
-    await accoutnSignUp.LoginToCodelessOne(url,username,password);
-    await page.context().storageState({path:'login.json'});
-}
+//     const page = await Driver.openNewBrowser();
+//     const accoutnSignUp = new LoginService(page);
+//     await accoutnSignUp.LoginToCodelessOne(url,username,password);
+//     await page.context().storageState({path:'login.json'});
+// }

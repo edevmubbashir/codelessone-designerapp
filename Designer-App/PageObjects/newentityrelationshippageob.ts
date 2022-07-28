@@ -3,7 +3,9 @@ import { BasePageOb } from "./basepageob";
 export class NewEntityRelationshipPageOB extends BasePageOb {
   //#region NEW RELATIONSHIP ENTITIES MAPING
 
-  public readonly newEntityRelations: string = "text=Entity Relations";
+  //public readonly newEntityRelations: string = "text=Entity Relations";
+  public readonly newEntityRelations: string = "//i[@title='Entity Relations']";
+
   public readonly selectFirstEntityDropdown: string = ".k-input >> nth=0";
 
   public readonly firstEntityText: string =

@@ -1,4 +1,4 @@
-import Driver from "../../Main/Driver";
+import Driver from "../../../Main/Driver";
 import { NewAttributePageOB } from "../../PageObjects/newattributepageob";
 import GeneralMethodServices from "../SharedServices/GeneralMethodsServices";
 

@@ -1,4 +1,4 @@
-import Driver from "../../Main/Driver";
+import Driver from "../../../Main/Driver";
 
 export default class GeneralMethodServices extends Driver{
 
