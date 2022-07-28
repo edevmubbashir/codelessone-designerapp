@@ -66,6 +66,7 @@ test.describe(
       expect(actualEntities).toEqual(entityList);
 
       await navigation.SelectEntity(testdata.ENTITY_NAMES[1]);
+      //Line Added by Hassan Imam
     });
   }
 );
