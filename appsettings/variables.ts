@@ -6,7 +6,7 @@ export enum UserCredentials{
     userPassword = 'inte1GREAT!',
 
     organizatioName = 'Org2043',
-    applicationName = 'CodelessApp26T055518855Z',
+    applicationName = 'CodelessApp04T101040066Z',
 
     runtimeUrl = "https://codelessonetest.azurewebsites.net/",
     portal = "Default Portal"

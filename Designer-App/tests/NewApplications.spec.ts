@@ -49,7 +49,7 @@ test.describe("Designer Events", async () => {
   const genralMethods = new GeneralMethodServices(Driver.page);
   const attributePage = new NewAttributeService(Driver.page);
 
-  test("To Verify Application Creation", async () => {
+  test.skip("To Verify Application Creation", async () => {
     
     var appName = MainCall.GetAppName();
     const newApp = new NewApplicationService(Driver.page);
@@ -57,7 +57,7 @@ test.describe("Designer Events", async () => {
     await newApp.CreateNewApplication(appName);
   });
 
-  test("Shared Steps: To Verify Entity Creation And It's Attribute", async () => {
+  test.skip("Shared Steps: To Verify Entity Creation And It's Attribute", async () => {
     const newEntity = new NewEntityService(Driver.page);
     console.log(testdata.ENTITY_NAMES[0]);
 
@@ -68,7 +68,7 @@ test.describe("Designer Events", async () => {
     await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[1], testdata.ATTRIBUTE_TYPE.Num);
   });
 
-  test("Share Step: To Verify Creation of Second Entity And It's Attribut", async () => {
+  test.skip("Share Step: To Verify Creation of Second Entity And It's Attribut", async () => {
     const newEntity = new NewEntityService(Driver.page);
     await newEntity.ClickBackToEntity();
 
@@ -80,13 +80,14 @@ test.describe("Designer Events", async () => {
   });
 
   test("To Verify Entity Relation One to Many", async () => {
+    await Driver.page.pause();
     const entityRelationPage = new NewEntityRelationsService(Driver.page);
-    await entityRelationPage.CreateOneToManyEntityRelationship();
+    await entityRelationPage.CreateOneToManyEntityRelationship(testdata.ENTITY_NAMES[0], testdata.ENTITY_NAMES[1]);
   });
 
   test("To Verify Publish Application is successfull", async () => {
      const entityRelationPage = new NewEntityRelationsService(Driver.page);
-     await entityRelationPage.Pun
-    // await entityRelationPage.CreateOneToManyEntityRelationship();
+     await entityRelationPage.PublishNewApplication();
+     await entityRelationPage.IsApplicationPublished();
   });
 });

@@ -46,4 +46,13 @@ export default class PortalNavigationService extends Driver {
       }
     }
   }
+
+  public async SelectNewButton(){
+    await Driver.findElement(portalNavPageOb.elemAddNewEntity).click();
+  }
+
+  public async VerifyAttributesName(){
+    const numberOfAttributes =  Driver.findElement(portalNavPageOb.elemAddNewEntity);
+    //for()
+  }
 }

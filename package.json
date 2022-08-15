@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "codelessnewapp": "npx playwright test --project=codelessnewapp"
+    "codelessnewapp": "npx playwright test --project=codelessnewapp",
+    "codelessruntime": "npx playwright test --project=codelessruntime"
   },
   "keywords": [],
   "author": "",

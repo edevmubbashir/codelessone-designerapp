@@ -25,22 +25,25 @@ import { dir } from "console";
 //     //await accoutnSignUp.LoginAndOpenSpecificOrgAndProject(url,orgName,AppName,username,password);
 //   });
 
+
 test.describe(
   "Verify That Designer Application Rules Working fine on Runtime",
   async () => {
+    const url = UserCredentials.runtimeUrl;
+    const username = UserCredentials.userName;
+    const password = UserCredentials.userPassword;
+    const orgName = UserCredentials.organizatioName;
+    const appName = UserCredentials.applicationName;
+
+    const urlWithOrgName = url + orgName;
+
+    Driver.page = await Driver.openNewBrowser();
+    const accoutnSignUp = new RuntimeLoginService(Driver.page);
+    const appDashboard = new ApplicationDashboard(Driver.page);
+    const navigation = new PortalNavigationService(Driver.page);
+
     test("Runtime Test 01", async () => {
-      const url = UserCredentials.runtimeUrl;
-      const username = UserCredentials.userName;
-      const password = UserCredentials.userPassword;
-      const orgName = UserCredentials.organizatioName;
-      const appName = UserCredentials.applicationName;
 
-      const urlWithOrgName = url + orgName;
-
-      Driver.page = await Driver.openNewBrowser();
-      const accoutnSignUp = new RuntimeLoginService(Driver.page);
-      const appDashboard = new ApplicationDashboard(Driver.page);
-      const navigation = new PortalNavigationService(Driver.page);
 
       //  LOGIN TO CODELESS ONE RUNTIME APP
       // USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
@@ -55,9 +58,9 @@ test.describe(
       await appDashboard.SelectApplicationFromDashboard(appName);
       await appDashboard.SeletPortal();
 
-      await Driver.waitForNavigation();
+      //await Driver.waitForNavigation();
 
-      var entityList: Array<string> = [
+      let entityList: Array<string> = [
         testdata.ENTITY_NAMES[0],
         testdata.ENTITY_NAMES[1],
       ];
@@ -67,6 +70,12 @@ test.describe(
 
       await navigation.SelectEntity(testdata.ENTITY_NAMES[1]);
       //Line Added by Hassan Imam
+    });
+
+    test.skip("To verify Nre Record Creation", async()=>{
+      await navigation.SelectNewButton();
+      //await navigation.VerifyAttributesName();
+      //await navigation.ExpectCancelSaveAndNewSaveButton();
     });
   }
 );

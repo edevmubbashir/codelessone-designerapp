@@ -9,7 +9,7 @@ export class BasePageOb{
     //  HTML/ANGULAR TAGS
     public readonly anchorTag:string = "a";
     
-    public readonly tdTag:string = "tr";
+    public readonly tdTag:string = "td";
     public readonly trTag:string = "tr";
     public readonly tableTag:string = "table";
     public readonly theadTag:string = "thead";

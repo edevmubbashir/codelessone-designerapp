@@ -8,19 +8,25 @@ export class NewEntityRelationshipPageOB extends BasePageOb {
 
   public readonly selectFirstEntityDropdown: string = ".k-input >> nth=0";
 
-  public readonly firstEntityText: string =
-    'li[role="option"]:has-text("Entity01")';
 
   public readonly selectSecondEntityDropdown: string =
     "span:nth-child(3) > .k-dropdown-wrap > .k-input";
 
-  public readonly secondEntityText: string =
-    'li[role="option"]:has-text("Entity02")';
 
   public readonly createEntityRelationship: string = "text=Create >> nth=2";
 
   public readonly waitForCreationOfRelation: string =
     "text=Wait while relation is being created";
+
+  public readonly elemPublish:string = 'xpath=//*[@title="Publish"]';
+
+  public readonly elemPublishApp:string = 'text=Publish App';
+  public readonly elemPublishAppText:string = 'xpath=//*[contains(@class,"text-success")] >> nth=0';
+
+
+  public  getEntityText(firstEntity: any) {
+   return  `li[role="option"]:has-text("${firstEntity}")`;
+  }
 
   public getElemEntityRelationText(relationText: string) {
     return `u:has-text('${relationText}')`;

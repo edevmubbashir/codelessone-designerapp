@@ -4,11 +4,20 @@ import { NewEntityRelationshipPageOB } from "../../PageObjects/newentityrelation
 const newEntityRelationshipPO = new NewEntityRelationshipPageOB();
 
 export default class NewEntityRelationsService extends Driver {
-  public async CreateOneToManyEntityRelationship() {
+  public async CreateOneToManyEntityRelationship(firstEntity, secondEntity) {
     await this.ClickOnNewRelationButton();
-    await this.SelectEntitiesForRelation();
+    await this.SelectEntitiesForRelation(firstEntity, secondEntity);
     await this.SelectEntityRelationOption("One to Many");
     await this.IsEntityRelationCreated("One to Many");
+  }
+
+  public async PublishNewApplication(){
+    await Driver.findElement(newEntityRelationshipPO.elemPublish).click();
+    await Driver.findElement(newEntityRelationshipPO.elemPublishApp).click();
+
+  }
+  public async IsApplicationPublished(){
+    await Driver.waitToExpectElement(newEntityRelationshipPO.elemPublishAppText).toHaveText("App is successfully published");
   }
 
   private async ClickOnNewRelationButton() {
@@ -16,16 +25,16 @@ export default class NewEntityRelationsService extends Driver {
     await Driver.findElement(newEntityRelationshipPO.addItemClass).click();
   }
 
-  private async SelectEntitiesForRelation() {
+  private async SelectEntitiesForRelation(firstEntity, secondEntity) {
     await Driver.findElement(
       newEntityRelationshipPO.selectFirstEntityDropdown
     ).click();
-    await Driver.findElement(newEntityRelationshipPO.firstEntityText).click();
+    await Driver.findElement(newEntityRelationshipPO.getEntityText(firstEntity)).click();
 
     await Driver.findElement(
       newEntityRelationshipPO.selectSecondEntityDropdown
     ).click();
-    await Driver.findElement(newEntityRelationshipPO.secondEntityText).click();
+    await Driver.findElement(newEntityRelationshipPO.getEntityText(secondEntity)).click();
   }
 
   private async SelectEntityRelationOption(relationType: string) {
