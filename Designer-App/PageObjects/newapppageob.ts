@@ -4,8 +4,8 @@ export class NewAppPageOb extends BasePageOb{
 
     //#region NEW APPLICATION UI MAPS
     
-    public readonly newAppButton:string = "button[title='Create new Application']";
-    public readonly useOurSolution:string = "//p[contains(text(),'solution')]";
+    public readonly newAppButton:string = "button[title='Create new App']";
+    public readonly useOurSolution:string = "//p[contains(text(),'domain')]";
     public readonly buildYourOwn:string = "//p[contains(text(),'Build')]";
     public readonly spreadSheet:string = "//p[contains(text(),'spreadsheet')]";
 

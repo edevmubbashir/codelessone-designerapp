@@ -49,22 +49,24 @@ test.describe("Designer Events", async () => {
   const genralMethods = new GeneralMethodServices(Driver.page);
   const attributePage = new NewAttributeService(Driver.page);
 
-  test.skip("To Verify Application Creation", async () => {
-    
+  test("To Verify Application Creation", async () => {
+    //await Driver.page.pause();
     var appName = MainCall.GetAppName();
     const newApp = new NewApplicationService(Driver.page);
 
     await newApp.CreateNewApplication(appName);
   });
 
-  test.skip("Shared Steps: To Verify Entity Creation And It's Attribute", async () => {
+  test("Shared Steps: To Verify Entity Creation And It's Attribute", async () => {
+
     const newEntity = new NewEntityService(Driver.page);
     console.log(testdata.ENTITY_NAMES[0]);
 
     await newEntity.CreateNewEntityViaCreateButton(testdata.ENTITY_NAMES[0]);
-
     await entityPage.SelectEntityFromGrid(testdata.ENTITY_NAMES[0], false);
     await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[0], testdata.ATTRIBUTE_TYPE.Txt);
+    await Driver.page.pause();
+
     await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[1], testdata.ATTRIBUTE_TYPE.Num);
   });
 
@@ -79,13 +81,13 @@ test.describe("Designer Events", async () => {
     await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[3], testdata.ATTRIBUTE_TYPE.Num);
   });
 
-  test("To Verify Entity Relation One to Many", async () => {
-    await Driver.page.pause();
+  test.skip("To Verify Entity Relation One to Many", async () => {
+    //await Driver.page.pause();
     const entityRelationPage = new NewEntityRelationsService(Driver.page);
     await entityRelationPage.CreateOneToManyEntityRelationship(testdata.ENTITY_NAMES[0], testdata.ENTITY_NAMES[1]);
   });
 
-  test("To Verify Publish Application is successfull", async () => {
+  test.skip("To Verify Publish Application is successfull", async () => {
      const entityRelationPage = new NewEntityRelationsService(Driver.page);
      await entityRelationPage.PublishNewApplication();
      await entityRelationPage.IsApplicationPublished();

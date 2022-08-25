@@ -100,7 +100,7 @@ export default class NewAttributeService extends Driver{
 
     private async VerifyAttributeIsCreatedSuccessfully(attrName:string, attrType:string){
 
-        await Driver.findElementWithOptions(attributePO.gridTableCell,{hasText: attrName,}).isVisible();
+        await Driver.findElementWithOptions(attributePO.gridTableCell,{hasText: attrName,}).first().isVisible();
         await Driver.findElementWithOptions(attributePO.gridTableCell,{hasText: attrType,}).isVisible();
     }
 
