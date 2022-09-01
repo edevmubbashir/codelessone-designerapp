@@ -1,16 +1,17 @@
 {
-  "ENTITY_NAMES": {
+  
+  "entityNames": {
     "0": "Accounts",
     "1": "Finance",
     "2": "Entity03"
   },
-  "ATTRIBUTES_NAMES": {
+  "attributesNames": {
     "0": "Account Title",
     "1": "Account Number",
     "2": "Finance Name",
     "3":  "Capital Amount"
   },
-  "ATTRIBUTE_TYPE": {
+  "attributesType": {
     "Txt": "Text",
     "Num": "Number",
     "DropD": "Dropdown",

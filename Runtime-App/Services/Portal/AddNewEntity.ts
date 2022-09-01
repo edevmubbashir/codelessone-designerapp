@@ -1,10 +1,10 @@
-import Driver from "../../../Main/Driver";
-import { CrudOperationsPageObject } from "../../PageObjects/crud-operationpageob";
+import Driver from "../../../main/driver";
+import { CrudOperationsPageObject } from "../../pageObjects/crud-operationpageob";
 
-var crudOperation = new CrudOperationsPageObject();
+const crudOperation = new CrudOperationsPageObject();
 export default class AddNewEntity extends Driver {
-  private async ClickNewButton() {
+  private async clickNewButton() {
     await Driver.findElement(crudOperation.addItemClass).click();
   }
-  private async EnterAttributeName(attributeName: string) {}
+  private async enterAttributeName(attributeName: string) {}
 }

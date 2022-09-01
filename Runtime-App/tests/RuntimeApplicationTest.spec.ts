@@ -1,11 +1,11 @@
 import { test, Page, expect } from "@playwright/test";
 import { UserCredentials } from "../../appsettings/variables";
-import RuntimeLoginService from "../Services/RuntimeLogin/RuntimeLogin";
+import RuntimeLoginService from "../services/runtimeLogin/runtimeLogin";
 import * as testdata from "../../appsettings/testdata.json";
 
-import Driver from "../../Main/Driver";
-import ApplicationDashboard from "../Services/RuntimeLogin/ProjectDashboard";
-import PortalNavigationService from "../Services/Portal/MasterNavigation";
+import Driver from "../../main/driver";
+import ApplicationDashboard from "../services/runtimeLogin/projectDashboard";
+import PortalNavigationService from "../services/portal/masterNavigation";
 import { dir } from "console";
 
 // test.beforeAll(async () => {
@@ -25,57 +25,51 @@ import { dir } from "console";
 //     //await accoutnSignUp.LoginAndOpenSpecificOrgAndProject(url,orgName,AppName,username,password);
 //   });
 
+test.describe("Verify That Designer Application Rules Working fine on Runtime", async () => {
+  const url = UserCredentials.runtimeUrl;
+  const username = UserCredentials.userName;
+  const password = UserCredentials.userPassword;
+  const orgName = UserCredentials.organizatioName;
+  const appName = UserCredentials.applicationName;
 
-test.describe(
-  "Verify That Designer Application Rules Working fine on Runtime",
-  async () => {
-    const url = UserCredentials.runtimeUrl;
-    const username = UserCredentials.userName;
-    const password = UserCredentials.userPassword;
-    const orgName = UserCredentials.organizatioName;
-    const appName = UserCredentials.applicationName;
+  const urlWithOrgName = url + orgName;
 
-    const urlWithOrgName = url + orgName;
+  Driver.page = await Driver.openNewBrowser();
+  const accoutnSignUp = new RuntimeLoginService(Driver.page);
+  const appDashboard = new ApplicationDashboard(Driver.page);
+  const navigation = new PortalNavigationService(Driver.page);
 
-    Driver.page = await Driver.openNewBrowser();
-    const accoutnSignUp = new RuntimeLoginService(Driver.page);
-    const appDashboard = new ApplicationDashboard(Driver.page);
-    const navigation = new PortalNavigationService(Driver.page);
+  test("Runtime Test 01", async () => {
+    //  LOGIN TO CODELESS ONE RUNTIME APP
+    // USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
+    await accoutnSignUp.loginToCodelessOne(
+      urlWithOrgName,
+      username,
+      password,
+      appName
+    );
 
-    test("Runtime Test 01", async () => {
+    await appDashboard.verifyThatAppNameIsVisibleOnDashboard(appName);
+    await appDashboard.selectApplicationFromDashboard(appName);
+    await appDashboard.seletPortal();
 
+    //await Driver.waitForNavigation();
 
-      //  LOGIN TO CODELESS ONE RUNTIME APP
-      // USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
-      await accoutnSignUp.LoginToCodelessOne(
-        urlWithOrgName,
-        username,
-        password,
-        appName
-      );
+    let entityList: Array<string> = [
+      testdata.entityNames[0],
+      testdata.entityNames[1],
+    ];
 
-      await appDashboard.VerifyThatAppNameIsVisibleOnDashboard(appName);
-      await appDashboard.SelectApplicationFromDashboard(appName);
-      await appDashboard.SeletPortal();
+    let actualEntities = await navigation.getEntitiesShowingOnRuntime();
+    expect(actualEntities).toEqual(entityList);
 
-      //await Driver.waitForNavigation();
+    await navigation.selectEntity(testdata.entityNames[1]);
+    //Line Added by Hassan Imam
+  });
 
-      let entityList: Array<string> = [
-        testdata.ENTITY_NAMES[0],
-        testdata.ENTITY_NAMES[1],
-      ];
-
-      var actualEntities = await navigation.GetEntitiesShowingOnRuntime();
-      expect(actualEntities).toEqual(entityList);
-
-      await navigation.SelectEntity(testdata.ENTITY_NAMES[1]);
-      //Line Added by Hassan Imam
-    });
-
-    test.skip("To verify Nre Record Creation", async()=>{
-      await navigation.SelectNewButton();
-      //await navigation.VerifyAttributesName();
-      //await navigation.ExpectCancelSaveAndNewSaveButton();
-    });
-  }
-);
+  test.skip("To verify Nre Record Creation", async () => {
+    await navigation.selectNewButton();
+    //await navigation.VerifyAttributesName();
+    //await navigation.ExpectCancelSaveAndNewSaveButton();
+  });
+});

@@ -1,95 +1,62 @@
-import LoginService from "../Services/DesignerLogin/Login";
-import Driver from "../../Main/Driver";
-import MainCall from "../../Main/MainCall";
-import { test, Page, expect } from "@playwright/test";
-import { UserCredentials } from "../../appsettings/variables";
-import NewApplicationService from "../Services/Application/NewApplication";
-import config from "../../playwright.config";
-import NewEntityService from "../Services/Entity/NewEntities";
-import GeneralMethodServices from "../Services/SharedServices/GeneralMethodsServices";
-import NewAttributeService from "../Services/Attributes/NewAttributes";
-import NewEntityRelationsService from "../Services/Relations/EntityRelations";
+import MainCall from "../../main/MainCall";
+import { test } from "../../fixtures/my-test";
 import * as testdata from "../../appsettings/testdata.json";
+import NewEntityService from "../services/entity/newEntities";
+import NewAttributeService from "../services/attributes/newAttributes";
+import NewApplicationService from "../services/application/newApplication";
+import NewEntityRelationsService from "../services/relations/entityRelations";
 
-test.beforeAll(async () => {
-  const url = UserCredentials.designerUrl;
-  const username = UserCredentials.userName;
-  const password = UserCredentials.userPassword;
-  const orgName = UserCredentials.organizatioName;
-  const AppName = UserCredentials.applicationName;
+test("Scenario: To verify creation and publication of Application", async ({
+  userContext,
+}) => {
+  const firstUser = await userContext.newPage();
+  const entityPage = new NewEntityService(firstUser);
+  const attributePage = new NewAttributeService(firstUser);
+  const appName = MainCall.getAppName();
+  const newApp = new NewApplicationService(firstUser);
+  const newEntity = new NewEntityService(firstUser);
+  const entityRelationPage = new NewEntityRelationsService(firstUser);
 
-  Driver.page = await Driver.openNewBrowser();
-  const accoutnSignUp = new LoginService(Driver.page);
+  /*creating new application */
+  await newApp.openOrganization();
+  await newApp.createNewApplication(appName);
 
-  //  USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
-  await accoutnSignUp.LoginToCodelessOne(url, username, password);
+  /*creating first entity*/
+  await newEntity.createNewEntityViaCreateButton(testdata.entityNames[0]);
+  await entityPage.selectEntityFromGrid(testdata.entityNames[0], false);
+  await attributePage.addNewAttribute(
+    testdata.attributesNames[0],
+    testdata.attributesType.Txt
+  );
+  await attributePage.addNewAttribute(
+    testdata.attributesNames[1],
+    testdata.attributesType.Num
+  );
 
-  // USE BELOW METHOD IF WE WANT TO CREAT ENTITIES ON ALREADY CREATED APPLICATION
-  //await accoutnSignUp.LoginAndOpenSpecificOrgAndProject(url,orgName,AppName,username,password);
-});
+  /*creating second entity*/
+  await newEntity.clickBackToEntity();
+  await newEntity.createNewEntityViaCreateButton(testdata.entityNames[1]);
+  await entityPage.selectEntityFromGrid(testdata.entityNames[1], false);
+  await attributePage.addNewAttribute(
+    testdata.attributesNames[2],
+    testdata.attributesType.Txt
+  );
+  await attributePage.addNewAttribute(
+    testdata.attributesNames[3],
+    testdata.attributesType.Num
+  );
 
-// const ENTITY_NAMES = ["Accounts", "Finance", "Entity03"];
+  /*create one to many relation between two entities*/
+  await entityRelationPage.createOneToManyEntityRelationship(
+    testdata.entityNames[0],
+    testdata.entityNames[1]
+  );
 
-// const ATTRIBUTES_NAMES = ["Attribute01", "Attribute02", "Attribute03"];
-
-// const ATTRIBUTE_TYPE = [
-//   "Text",
-//   "Number",
-//   "Dropdown",
-//   "Date Time",
-//   "User Identity",
-//   "Email",
-//   "Link",
-//   "Rich Content",
-// ];
-
-test.describe("Designer Events", async () => {
-  
-  const entityPage = new NewEntityService(Driver.page);
-  const genralMethods = new GeneralMethodServices(Driver.page);
-  const attributePage = new NewAttributeService(Driver.page);
-
-  test("To Verify Application Creation", async () => {
-    //await Driver.page.pause();
-    var appName = MainCall.GetAppName();
-    const newApp = new NewApplicationService(Driver.page);
-
-    await newApp.CreateNewApplication(appName);
-  });
-
-  test("Shared Steps: To Verify Entity Creation And It's Attribute", async () => {
-
-    const newEntity = new NewEntityService(Driver.page);
-    console.log(testdata.ENTITY_NAMES[0]);
-
-    await newEntity.CreateNewEntityViaCreateButton(testdata.ENTITY_NAMES[0]);
-    await entityPage.SelectEntityFromGrid(testdata.ENTITY_NAMES[0], false);
-    await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[0], testdata.ATTRIBUTE_TYPE.Txt);
-    await Driver.page.pause();
-
-    await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[1], testdata.ATTRIBUTE_TYPE.Num);
-  });
-
-  test.skip("Share Step: To Verify Creation of Second Entity And It's Attribut", async () => {
-    const newEntity = new NewEntityService(Driver.page);
-    await newEntity.ClickBackToEntity();
-
-    await newEntity.CreateNewEntityViaCreateButton(testdata.ENTITY_NAMES[1]);
-
-    await entityPage.SelectEntityFromGrid(testdata.ENTITY_NAMES[1], false);
-    await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[2], testdata.ATTRIBUTE_TYPE.Txt);
-    await attributePage.AddNewAttribute(testdata.ATTRIBUTES_NAMES[3], testdata.ATTRIBUTE_TYPE.Num);
-  });
-
-  test.skip("To Verify Entity Relation One to Many", async () => {
-    //await Driver.page.pause();
-    const entityRelationPage = new NewEntityRelationsService(Driver.page);
-    await entityRelationPage.CreateOneToManyEntityRelationship(testdata.ENTITY_NAMES[0], testdata.ENTITY_NAMES[1]);
-  });
-
-  test.skip("To Verify Publish Application is successfull", async () => {
-     const entityRelationPage = new NewEntityRelationsService(Driver.page);
-     await entityRelationPage.PublishNewApplication();
-     await entityRelationPage.IsApplicationPublished();
-  });
+  /*Publish appllcation*/
+  await entityRelationPage.publishNewApplication();
+  await entityRelationPage.isApplicationPublished();
+  await userContext.waitForEvent("page");
+  const numberOfPages = await userContext.pages();
+  const entityRelationNewPage = new NewEntityRelationsService(numberOfPages[1]);
+  await entityRelationNewPage.isDefaultPortalShowing();
 });

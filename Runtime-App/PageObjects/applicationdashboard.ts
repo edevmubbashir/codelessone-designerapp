@@ -1,17 +1,12 @@
-
 import { UserCredentials } from "../../appsettings/variables";
-export class ApplicationDashboardPageOb{
+export class ApplicationDashboardPageOb {
+  getApplicationDashboardName(applicationName: string) {
+    let returnParam = "//div[@title='" + applicationName + "']";
+    console.log(returnParam);
 
-    public getApplicationDashboardName(applicationName: string) {
-        var returnParam = "//div[@title='"+applicationName+"']"
-        console.log(returnParam);
-        
-        return returnParam;
-      }
-    
-      
-    public readonly portalViews:string = "//div[contains(text(),'"+UserCredentials.portal+"')]";
-     
-  
+    return returnParam;
+  }
 
+  readonly portalViews: string =
+    "//div[contains(text(),'" + UserCredentials.portal + "')]";
 }

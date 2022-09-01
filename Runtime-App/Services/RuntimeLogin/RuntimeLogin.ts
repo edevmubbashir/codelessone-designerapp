@@ -1,15 +1,15 @@
 import { expect } from "@playwright/test";
 import exp from "constants";
 import { ADDRGETNETWORKPARAMS } from "dns";
-import Driver from "../../../Main/Driver";
-import { ApplicationDashboardPageOb } from "../../PageObjects/applicationdashboard";
-import { RuntimeLoginPageOb } from "../../PageObjects/runtime-loginpageob";
-import ApplicationDashboard from "./ProjectDashboard";
+import Driver from "../../../main/driver";
+import { ApplicationDashboardPageOb } from "../../pageObjects/applicationdashboard";
+import { RuntimeLoginPageOb } from "../../pageObjects/runtime-loginpageob";
+import ApplicationDashboard from "./projectDashboard";
 
-var loginPO = new RuntimeLoginPageOb();
+const loginPO = new RuntimeLoginPageOb();
 
 export default class RuntimeLoginService extends Driver {
-  public async LoginToCodelessOne(
+  async loginToCodelessOne(
     url: string,
     userName: string,
     password: string,

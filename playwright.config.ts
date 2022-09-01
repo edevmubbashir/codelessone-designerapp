@@ -15,14 +15,16 @@ const config: PlaywrightTestConfig = {
   //testDir: './Runtime-App/tests'
   //testDir: 'ForhassanImam',
   /* Maximum time one test can run for. */
-  timeout: 240 * 1000,
+  timeout: 2400 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 60000,
+    timeout: 90000,
   },
+
+  globalSetup: require.resolve("./global-setup"),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -32,11 +34,13 @@ const config: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+
+  reporter: [["html", { open: "always" }]],
+  //reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 0,
+    actionTimeout: 240 * 100,
     viewport: null,
     headless: false,
 
@@ -59,14 +63,14 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: "codelessnewapp",
-      testMatch: /.*NewApplications.spec.ts/,
+      testMatch: /.*newApplications.spec.ts/,
       //testMatch: /.*RuntimeApplicationTest.spec.ts/,
       //testDir: './tests'
     },
     {
       name: "codelessruntime",
       //testMatch: /.*NewApplications.spec.ts/,
-      testMatch: /.*RuntimeApplicationTest.spec.ts/,
+      testMatch: /.*runtimeApplicationTest.spec.ts/,
       //testDir: './tests'
     },
     // {

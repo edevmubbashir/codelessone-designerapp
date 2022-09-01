@@ -1,32 +1,26 @@
-import Driver from "../../../Main/Driver";
+import Driver from "../../../main/Driver";
 import { expect } from "@playwright/test";
-import { NewEntityPageOB } from "../../PageObjects/newentitypageob";
+import { NewEntityPageOB } from "../../pageObjects/newentitypageob";
 
-var newEntityPO = new NewEntityPageOB();
+const newEntityPO = new NewEntityPageOB();
 
 export default class NewEntityService extends Driver {
-  public async CreateNewEntityViaCreateButton(entityName: string) {
-    await this.ClickAddEntityButton();
-
-    await this.EnterEntityName(entityName);
-    await this.ClickEntityCreateButton();
-
-    await this.ClickBackToEntity();
+  async createNewEntityViaCreateButton(entityName: string) {
+    await this.clickAddEntityButton();
+    await this.enterEntityName(entityName);
+    await this.clickEntityCreateButton();
+    await this.clickBackToEntity();
   }
 
-  public async SelectEntityFromGrid(
-    entityName: string,
-    clickBack2Entity: boolean
-  ) {
-    await this.VerifyEntityIsShowingOnGrid(entityName);
-    await this.SelectEntity(entityName);
-
+  async selectEntityFromGrid(entityName: string, clickBack2Entity: boolean) {
+    await this.verifyEntityIsShowingOnGrid(entityName);
+    await this.selectEntity(entityName);
     if (clickBack2Entity) {
-      await this.ClickBackToEntity();
+      await this.clickBackToEntity();
     }
   }
 
-  private async ClickAddEntityButton() {
+  private async clickAddEntityButton() {
     await Driver.findElement(newEntityPO.addItemClass).click();
 
     /**
@@ -35,6 +29,8 @@ export default class NewEntityService extends Driver {
      * 2.   Cancel button should be enable.
      * 3.   Create And New button should be disable.
      * 4.   Create Button should be disable.
+     * 5.   Cross icon shoud be visible
+     * 6.   Manadatory text box
      */
     await Driver.waitToExpectElement(
       newEntityPO.newEntityTextBox
@@ -44,9 +40,23 @@ export default class NewEntityService extends Driver {
       newEntityPO.modalCreateAndNewBtn
     ).toBeDisabled();
     await Driver.waitToExpectElement(newEntityPO.modalCreateBtn).toBeDisabled();
+
+    await Driver.waitToExpectElement(
+      newEntityPO.elemModalCrossIcon
+    ).toBeVisible();
+
+    await Driver.expectElement(
+      Driver.findElement(newEntityPO.elemIconDropDown).last()
+    ).toBeEnabled();
+
+    Driver.expectElement(
+      Driver.findElement('xpath=//*[@class="form-label d-inline-block"]')
+        .last()
+        .getAttribute("required")
+    ).not.toBeNull();
   }
 
-  private async EnterEntityName(entityName: string) {
+  private async enterEntityName(entityName: string) {
     await Driver.findElement(newEntityPO.newEntityTextBox).fill(entityName);
 
     // VERIFY AFTER ENTERING ENTITY NAME, CREATE AND NEW BUTTON , CREATE BUTTON SHOULD BE ENABLE.
@@ -56,7 +66,7 @@ export default class NewEntityService extends Driver {
     await Driver.waitToExpectElement(newEntityPO.modalCreateBtn).toBeEnabled();
   }
 
-  private async ClickEntityCreateButton() {
+  private async clickEntityCreateButton() {
     await Driver.findElement(newEntityPO.modalCreateBtn).click();
 
     await Driver.waitForNavigation();
@@ -68,19 +78,19 @@ export default class NewEntityService extends Driver {
     await Driver.waitToExpectElement(newEntityPO.addItemClass).toBeVisible();
   }
 
-  public async ClickBackToEntity() {
+  async clickBackToEntity() {
     await Driver.findElement(newEntityPO.entitySuccessBackToEntity).click();
 
     //  ADD ASSERTION: TO VERIFY THAT BACK TO ENTITY PAGE IS SUCCESSFULL
   }
 
-  private async VerifyEntityIsShowingOnGrid(entityName: string) {
+  private async verifyEntityIsShowingOnGrid(entityName: string) {
     await Driver.waitToExpectElementWithOptions(newEntityPO.anchorTag, {
       hasText: entityName,
     }).toBeVisible();
   }
 
-  private async SelectEntity(entityName: string) {
+  private async selectEntity(entityName: string) {
     await Driver.findElementWithOptions(newEntityPO.anchorTag, {
       hasText: entityName,
     }).click();

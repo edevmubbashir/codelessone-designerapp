@@ -1,21 +1,23 @@
-import Driver from "../../../Main/Driver";
-import { ApplicationDashboardPageOb } from "../../PageObjects/applicationdashboard";
+import Driver from "../../../main/driver";
+import { ApplicationDashboardPageOb } from "../../pageObjects/applicationdashboard";
 
-var applicationDashboardsPageOb = new ApplicationDashboardPageOb();
+const applicationDashboardsPageOb = new ApplicationDashboardPageOb();
 
-export default class ApplicationDashboard extends Driver{
+export default class ApplicationDashboard extends Driver {
+  async verifyThatAppNameIsVisibleOnDashboard(appName: string) {
+    await Driver.waitToExpectElement(
+      applicationDashboardsPageOb.getApplicationDashboardName(appName)
+    ).toBeVisible();
+  }
 
-    public async  VerifyThatAppNameIsVisibleOnDashboard(appName:string){
-        await Driver.waitToExpectElement(applicationDashboardsPageOb.getApplicationDashboardName(appName)).toBeVisible();
-    }
+  async selectApplicationFromDashboard(appName: string) {
+    await Driver.findElement(
+      applicationDashboardsPageOb.getApplicationDashboardName(appName)
+    ).click();
+    await Driver.waitForNavigation();
+  }
 
-    public async SelectApplicationFromDashboard(appName:string){
-        await Driver.findElement(applicationDashboardsPageOb.getApplicationDashboardName(appName)).click();
-        await Driver.waitForNavigation();
-    }
-
-    public async SeletPortal(){
-        await Driver.findElement(applicationDashboardsPageOb.portalViews).click();
-    }
-
+  async seletPortal() {
+    await Driver.findElement(applicationDashboardsPageOb.portalViews).click();
+  }
 }
