@@ -1,5 +1,5 @@
 import MainCall from "../../main/MainCall";
-import { test } from "../../fixtures/my-test";
+import { test } from "../../fixtures/codelessTest";
 import * as testdata from "../../appsettings/testdata.json";
 import NewEntityService from "../services/entity/newEntities";
 import NewAttributeService from "../services/attributes/newAttributes";
@@ -59,4 +59,23 @@ test("Scenario: To verify creation and publication of Application", async ({
   const numberOfPages = await userContext.pages();
   const entityRelationNewPage = new NewEntityRelationsService(numberOfPages[1]);
   await entityRelationNewPage.isDefaultPortalShowing();
+});
+
+test("TC_04, 06, 07 Verify when you click on Create and New Entity button, it creates the Entity and resets the Create entity pop up fields", async ({
+  firstUser,
+}) => {
+  const newApp = new NewApplicationService(firstUser);
+  const newEntity = new NewEntityService(firstUser);
+
+  await newApp.openOrganization();
+  await newApp.openApplication();
+
+  await newEntity.createNewEntityViaCreateAndNewButton(testdata.entityNames[2]);
+  await newEntity.verifyEntityNotCreatedWhenClickOnCancelButton(
+    testdata.entityNames[3]
+  );
+  await newEntity.clickAddEntityButton();
+  await newEntity.verifyEntityNotCreatedWhenClickOnCrossIconButton(
+    testdata.entityNames[3]
+  );
 });

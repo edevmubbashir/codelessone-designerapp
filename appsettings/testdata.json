@@ -3,7 +3,8 @@
   "entityNames": {
     "0": "Accounts",
     "1": "Finance",
-    "2": "Entity03"
+    "2": "Entity03",
+    "3": "Entity04"
   },
   "attributesNames": {
     "0": "Account Title",
