@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
 import { UserCredentials } from "../../../appsettings/variables";
+import * as app from "../../../appsettings/appName.json";
 import Driver from "../../../main/Driver";
 import { NewAppPageOb } from "../../pageObjects/newapppageob";
 
@@ -22,11 +23,12 @@ export default class NewApplicationService extends Driver {
     await Driver.navigateToURL(
       `https://appmaker.xtremecodeless.com/${organizatioName}`
     );
-    await Driver.waitToExpectElement(newappPO.newAppButton).toBeVisible();
+    await Driver.waitToExpectElement(newappPO.newAppButton).toBeVisible({
+      timeout: 90000,
+    });
   }
 
-  async openApplication() {
-    const appName = UserCredentials.applicationName;
+  async openApplication(appName: any) {
     await Driver.findElement(newappPO.elemGetApplicationName(appName)).click();
   }
   //#endregion PUBLIC METHODS

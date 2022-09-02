@@ -1,5 +1,4 @@
 import Driver from "../../../main/Driver";
-import { expect } from "@playwright/test";
 import { NewEntityPageOB } from "../../pageObjects/newentitypageob";
 
 const newEntityPO = new NewEntityPageOB();
@@ -8,7 +7,6 @@ export default class NewEntityService extends Driver {
   async createNewEntityViaCreateButton(entityName: string) {
     await this.clickAddEntityButton();
     await this.enterEntityName(entityName);
-    await this.selectIcon();
     await this.clickEntityCreateButton();
     await this.clickBackToEntity();
   }
