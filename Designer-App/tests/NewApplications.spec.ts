@@ -1,19 +1,19 @@
 import MainCall from "../../main/MainCall";
 import { test } from "../../fixtures/codelessTest";
 import * as testdata from "../../appsettings/testdata.json";
-import * as app from "../../appsettings/appName.json";
 import NewEntityService from "../services/entity/newEntities";
 import NewAttributeService from "../services/attributes/newAttributes";
 import NewApplicationService from "../services/application/newApplication";
 import NewEntityRelationsService from "../services/relations/entityRelations";
 
+let appName: any;
+
 test("Scenario: To verify creation and publication of Application", async ({
   userContext,
 }) => {
   const firstUser = await userContext.newPage();
-  const entityPage = new NewEntityService(firstUser);
   const attributePage = new NewAttributeService(firstUser);
-  const appName = MainCall.getAppName();
+  appName = MainCall.getAppName();
   const newApp = new NewApplicationService(firstUser);
   const newEntity = new NewEntityService(firstUser);
   const entityRelationPage = new NewEntityRelationsService(firstUser);
@@ -25,7 +25,7 @@ test("Scenario: To verify creation and publication of Application", async ({
 
   await test.step("Creating first entity", async () => {
     await newEntity.createNewEntityViaCreateButton(testdata.entityNames[0]);
-    await entityPage.selectEntityFromGrid(testdata.entityNames[0], false);
+    await newEntity.verifyNewEntityCreated(testdata.entityNames[0]);
     await attributePage.addNewAttribute(
       testdata.attributesNames[0],
       testdata.attributesType.Txt
@@ -39,7 +39,7 @@ test("Scenario: To verify creation and publication of Application", async ({
   await test.step("Creating second entity", async () => {
     await newEntity.clickBackToEntity();
     await newEntity.createNewEntityViaCreateButton(testdata.entityNames[1]);
-    await entityPage.selectEntityFromGrid(testdata.entityNames[1], false);
+    await newEntity.verifyNewEntityCreated(testdata.entityNames[1]);
     await attributePage.addNewAttribute(
       testdata.attributesNames[2],
       testdata.attributesType.Txt
@@ -76,8 +76,9 @@ test("TC_04, 06, 07 Verify when you click on Create and New Entity button, it cr
 }) => {
   const newApp = new NewApplicationService(firstUser);
   const newEntity = new NewEntityService(firstUser);
+
   await newApp.openOrganization();
-  await newApp.openApplication(app.appName);
+  await newApp.openApplication(appName);
 
   await test.step("Create new entity with create and new button", async () => {
     await newEntity.createNewEntityViaCreateAndNewButton(

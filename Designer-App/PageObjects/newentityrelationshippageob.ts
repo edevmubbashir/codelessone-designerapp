@@ -20,10 +20,8 @@ export class NewEntityRelationshipPageOB extends BasePageOb {
   public readonly elemPublish: string = 'xpath=//*[@title="Publish"]';
 
   public readonly elemPublishApp: string = "text=Publish App";
-  // public readonly elemPublishAppText: string =
-  //   'xpath=//*[contains(@class,"text-success")] >> nth=0';
 
-  public readonly elemPublishAppText: string = "text=App is being published";
+  public readonly elemPublishAppText: string = ".text-success";
 
   public readonly elemGoToApp: string = "text=Go to App";
 

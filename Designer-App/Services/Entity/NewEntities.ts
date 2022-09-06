@@ -8,7 +8,6 @@ export default class NewEntityService extends Driver {
     await this.clickAddEntityButton();
     await this.enterEntityName(entityName);
     await this.clickEntityCreateButton();
-    await this.clickBackToEntity();
   }
 
   async createNewEntityViaCreateAndNewButton(entityName: string) {
@@ -60,6 +59,12 @@ export default class NewEntityService extends Driver {
         .last()
         .getAttribute("required")
     ).not.toBeNull();
+  }
+
+  async verifyNewEntityCreated(entityName: string) {
+    await Driver.waitToExpectElement(newEntityPO.elemPageHeader).toHaveText(
+      `Attributes of ${entityName}`
+    );
   }
 
   private async enterEntityName(entityName: string) {

@@ -28,9 +28,10 @@ export default class NewApplicationService extends Driver {
     });
   }
 
-  async openApplication(appName: any) {
+  async openApplication(appName) {
     await Driver.findElement(newappPO.elemGetApplicationName(appName)).click();
   }
+
   //#endregion PUBLIC METHODS
 
   //#region PRIVATE METHODS

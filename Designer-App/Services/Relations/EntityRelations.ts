@@ -16,12 +16,12 @@ export default class NewEntityRelationsService extends Driver {
     await Driver.findElement(newEntityRelationshipPO.elemPublishApp).click();
   }
   async isApplicationPublished() {
-    await Driver.waitToExpectElement(
+    const successToast = Driver.findElement(
       newEntityRelationshipPO.elemPublishAppText
-    ).toBeHidden();
-    // await Driver.waitToExpectElement(
-    //   newEntityRelationshipPO.elemPublishAppText
-    // ).toHaveText("App is being  successfully published");
+    ).first();
+    await Driver.expectElement(successToast).toHaveText(
+      "App is successfully published"
+    );
   }
   async clickGoToApp() {
     await Driver.findElement(newEntityRelationshipPO.elemGoToApp).click();
@@ -29,7 +29,7 @@ export default class NewEntityRelationsService extends Driver {
   async isDefaultPortalShowing() {
     await Driver.waitToExpectElement(
       newEntityRelationshipPO.elemDefaultPortal
-    ).toHaveText("Default Portal");
+    ).toHaveText("Default Portal", { timeout: 180000 });
   }
 
   private async clickOnNewRelationButton() {
