@@ -1,5 +1,4 @@
-import type { PlaywrightTestConfig } from "@playwright/test";
-import { devices } from "@playwright/test";
+import { PlaywrightTestConfig } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -15,13 +14,13 @@ const config: PlaywrightTestConfig = {
   //testDir: './Runtime-App/tests'
   //testDir: 'ForhassanImam',
   /* Maximum time one test can run for. */
-  timeout: 2400 * 1000,
+  timeout: 24000 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 90000,
+    timeout: 120000,
   },
 
   globalSetup: require.resolve("./global-setup"),
@@ -35,12 +34,13 @@ const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 1 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
 
+  //reporter: [["html", { open: "always" }], ["allure-playwright"]],
   reporter: [["html", { open: "always" }]],
   //reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 240 * 100,
+    actionTimeout: 2400 * 100,
     viewport: null,
     headless: false,
 
@@ -53,7 +53,7 @@ const config: PlaywrightTestConfig = {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on",
     screenshot: "only-on-failure",
-    video: "on",
+    //video: "off",
     launchOptions: {
       args: ["--start-maximized"],
     },
@@ -73,6 +73,7 @@ const config: PlaywrightTestConfig = {
       testMatch: /.*runtimeApplicationTest.spec.ts/,
       //testDir: './tests'
     },
+
     // {
     //   name: 'chromium',
     //   use: {
@@ -81,9 +82,9 @@ const config: PlaywrightTestConfig = {
     // },
 
     // {
-    //   name: 'firefox',
+    //   name: "firefox",
     //   use: {
-    //     ...devices['Desktop Firefox'],
+    //     ...devices["Desktop Firefox"],
     //   },
     // },
 
