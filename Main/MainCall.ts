@@ -22,5 +22,18 @@ class MainCall {
 
     return name;
   }
+
+  static async getAppNameJSON() {
+    return new Promise((resolve, reject) => {
+      fs.readFile("./appsettings/appName.json", "utf8", (error, data) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(JSON.parse(data).appName);
+      });
+    });
+  }
 }
+
 export default MainCall;

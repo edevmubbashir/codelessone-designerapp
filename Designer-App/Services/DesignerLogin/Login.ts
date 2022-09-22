@@ -12,7 +12,9 @@ export default class LoginService extends Driver {
     await Driver.navigateToURL(url);
     await Driver.waitForNavigation();
 
-    await Driver.waitToExpectElement(loginPO.emailaddress).toBeVisible();
+    await Driver.waitToExpectElement(loginPO.emailaddress).toBeVisible({
+      timeout: 90000,
+    });
     await Driver.waitToExpectElement(loginPO.password).toBeVisible();
 
     await Driver.findElement(loginPO.emailaddress).fill(userName);

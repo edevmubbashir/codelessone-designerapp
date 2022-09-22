@@ -1,6 +1,5 @@
 import { expect } from "@playwright/test";
 import { UserCredentials } from "../../../appsettings/variables";
-import * as app from "../../../appsettings/appName.json";
 import Driver from "../../../main/Driver";
 import { NewAppPageOb } from "../../pageObjects/newapppageob";
 
@@ -24,7 +23,7 @@ export default class NewApplicationService extends Driver {
       `https://appmaker.xtremecodeless.com/${organizatioName}`
     );
     await Driver.waitToExpectElement(newappPO.newAppButton).toBeVisible({
-      timeout: 90000,
+      timeout: 120000,
     });
   }
 

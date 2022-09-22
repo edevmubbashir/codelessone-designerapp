@@ -6,14 +6,12 @@ import NewAttributeService from "../services/attributes/newAttributes";
 import NewApplicationService from "../services/application/newApplication";
 import NewEntityRelationsService from "../services/relations/entityRelations";
 
-let appName: any;
-
 test("Scenario: To verify creation and publication of Application", async ({
   userContext,
 }) => {
   const firstUser = await userContext.newPage();
   const attributePage = new NewAttributeService(firstUser);
-  appName = MainCall.getAppName();
+  const appName = MainCall.getAppName();
   const newApp = new NewApplicationService(firstUser);
   const newEntity = new NewEntityService(firstUser);
   const entityRelationPage = new NewEntityRelationsService(firstUser);
@@ -76,7 +74,7 @@ test("TC_04, 06, 07 Verify when you click on Create and New Entity button, it cr
 }) => {
   const newApp = new NewApplicationService(firstUser);
   const newEntity = new NewEntityService(firstUser);
-
+  const appName = await MainCall.getAppNameJSON().then((value) => value);
   await newApp.openOrganization();
   await newApp.openApplication(appName);
 
