@@ -1,4 +1,4 @@
-import { test, Page, expect } from "@playwright/test";
+import { test } from "../../fixtures/codelessTest";
 import { UserCredentials } from "../../appsettings/variables";
 import RuntimeLoginService from "../services/runtimeLogin/runtimeLogin";
 import * as testdata from "../../appsettings/testdata.json";
@@ -7,6 +7,8 @@ import Driver from "../../main/driver";
 import ApplicationDashboard from "../services/runtimeLogin/projectDashboard";
 import PortalNavigationService from "../services/portal/masterNavigation";
 import { dir } from "console";
+import NewApplicationService from "../../designer-app/services/application/newApplication";
+import MainCall from "../../main/MainCall";
 
 // test.beforeAll(async () => {
 //     const url = UserCredentials.designerUrl;
@@ -25,51 +27,65 @@ import { dir } from "console";
 //     //await accoutnSignUp.LoginAndOpenSpecificOrgAndProject(url,orgName,AppName,username,password);
 //   });
 
-test.describe("Verify That Designer Application Rules Working fine on Runtime", async () => {
-  const url = UserCredentials.runtimeUrl;
-  const username = UserCredentials.userName;
-  const password = UserCredentials.userPassword;
-  const orgName = UserCredentials.organizatioName;
-  const appName = UserCredentials.applicationName;
+// test.describe("Verify That Designer Application Rules Working fine on Runtime", async () => {
+//   const url = UserCredentials.runtimeUrl;
+//   const username = UserCredentials.userName;
+//   const password = UserCredentials.userPassword;
+//   const orgName = UserCredentials.organizatioName;
+//   const appName = UserCredentials.applicationName;
 
-  const urlWithOrgName = url + orgName;
+//   const urlWithOrgName = url + orgName;
 
-  Driver.page = await Driver.openNewBrowser();
-  const accoutnSignUp = new RuntimeLoginService(Driver.page);
-  const appDashboard = new ApplicationDashboard(Driver.page);
-  const navigation = new PortalNavigationService(Driver.page);
+//   Driver.page = await Driver.openNewBrowser();
+//   const accoutnSignUp = new RuntimeLoginService(Driver.page);
+//   const appDashboard = new ApplicationDashboard(Driver.page);
+//   const navigation = new PortalNavigationService(Driver.page);
 
-  test("Runtime Test 01", async () => {
-    //  LOGIN TO CODELESS ONE RUNTIME APP
-    // USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
-    await accoutnSignUp.loginToCodelessOne(
-      urlWithOrgName,
-      username,
-      password,
-      appName
-    );
+//   test("Runtime Test 01", async () => {
+//     //  LOGIN TO CODELESS ONE RUNTIME APP
+//     // USE BELOW METHOD IF WE WANT TO EXECUTE COMPLETE TRANSACTION LIKE CREATE NEW APP
+//     await accoutnSignUp.loginToCodelessOne(
+//       urlWithOrgName,
+//       username,
+//       password,
+//       appName
+//     );
 
-    await appDashboard.verifyThatAppNameIsVisibleOnDashboard(appName);
-    await appDashboard.selectApplicationFromDashboard(appName);
-    await appDashboard.seletPortal();
+//     await appDashboard.verifyThatAppNameIsVisibleOnDashboard(appName);
+//     await appDashboard.selectApplicationFromDashboard(appName);
+//     await appDashboard.seletPortal();
 
-    //await Driver.waitForNavigation();
+//     //await Driver.waitForNavigation();
 
-    let entityList: Array<string> = [
-      testdata.entityNames[0],
-      testdata.entityNames[1],
-    ];
+//     let entityList: Array<string> = [
+//       testdata.entityNames[0],
+//       testdata.entityNames[1],
+//     ];
 
-    let actualEntities = await navigation.getEntitiesShowingOnRuntime();
-    expect(actualEntities).toEqual(entityList);
+//     let actualEntities = await navigation.getEntitiesShowingOnRuntime();
+//     expect(actualEntities).toEqual(entityList);
 
-    await navigation.selectEntity(testdata.entityNames[1]);
-    //Line Added by Hassan Imam
+//     await navigation.selectEntity(testdata.entityNames[1]);
+//     //Line Added by Hassan Imam
+//   });
+
+//   test.skip("To verify Nre Record Creation", async () => {
+//     await navigation.selectNewButton();
+//     //await navigation.VerifyAttributesName();
+//     //await navigation.ExpectCancelSaveAndNewSaveButton();
+//   });
+// });
+
+test.skip("Scenario: Create application using import json", async ({
+  userContext,
+}) => {
+  const firstUser = await userContext.newPage();
+  const appName = MainCall.getAppName();
+  const newApp = new NewApplicationService(firstUser);
+  await test.step("Creating new application", async () => {
+    await newApp.openOrganization();
+    await newApp.createNewApplicationUsingImportJSON(appName);
   });
 
-  test.skip("To verify Nre Record Creation", async () => {
-    await navigation.selectNewButton();
-    //await navigation.VerifyAttributesName();
-    //await navigation.ExpectCancelSaveAndNewSaveButton();
-  });
+  await userContext.close();
 });

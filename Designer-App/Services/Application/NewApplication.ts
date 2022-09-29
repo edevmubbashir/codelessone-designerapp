@@ -9,12 +9,25 @@ export default class NewApplicationService extends Driver {
 
   async createNewApplication(appName: string) {
     expect(Driver.waitToExpectElement(newappPO.newAppButton).toBeVisible());
+    await Driver.waitToExpectElement(newappPO.appLoader).toBeHidden();
     await Driver.findElement(newappPO.newAppButton).click();
 
     await this.verifyNewApplicationOptionsAreVisible();
     await this.clickBuildYourOwnSolutionButton();
     await this.enterAppName(appName);
     await this.clickCreateButton();
+  }
+
+  async createNewApplicationUsingImportJSON(appName: string) {
+    await Driver.waitToExpectElement(newappPO.newAppButton).toBeVisible();
+    await Driver.waitToExpectElement(newappPO.appLoader).toBeHidden();
+    await Driver.findElement(newappPO.newAppButton).click();
+
+    await this.verifyNewApplicationOptionsAreVisible();
+    await this.clickImportSpreadsheetJSON();
+    await this.enterJSONAppName(appName);
+    await this.uploadAppJSONFile();
+    await this.clickImportButton();
   }
 
   async openOrganization() {
@@ -47,6 +60,28 @@ export default class NewApplicationService extends Driver {
     await Driver.waitToExpectElement(newappPO.newAppName).toBeVisible();
   }
 
+  private async clickImportSpreadsheetJSON() {
+    await Driver.findElement(newappPO.elemImportJSON).click();
+    await Driver.waitToExpectElement(newappPO.elemImportAppName).toBeVisible();
+  }
+
+  private async enterJSONAppName(appName: string) {
+    await Driver.findElement(newappPO.elemImportAppName).fill(appName);
+  }
+
+  private async uploadAppJSONFile() {
+    await Driver.findElement(newappPO.elemSelectFiles).setInputFiles(
+      UserCredentials.runTimeApp
+    );
+    await Driver.waitToExpectElement(newappPO.elemImport).toBeEnabled();
+  }
+
+  private async clickImportButton() {
+    await Driver.findElement(newappPO.elemImport).click();
+    await Driver.waitForNavigation();
+    await Driver.waitToExpectElement(newappPO.addItemClass).toBeVisible();
+  }
+
   private async enterAppName(appName: string) {
     await Driver.findElement(newappPO.newAppName).fill(appName);
     await Driver.waitToExpectElement(newappPO.createAppButton).toBeEnabled();
@@ -54,7 +89,6 @@ export default class NewApplicationService extends Driver {
 
   private async clickCreateButton() {
     await Driver.findElement(newappPO.createAppButton).click();
-
     await Driver.waitForNavigation();
     await Driver.waitToExpectElement(newappPO.addItemClass).toBeVisible();
   }

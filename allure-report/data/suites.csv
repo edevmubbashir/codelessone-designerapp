@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Tue Sep 27 10:55:51 PKT 2022","Tue Sep 27 10:56:41 PKT 2022","50389","Google Chrome","designer-app\tests\newApplications.spec.ts","","","","Scenario: To verify creation and publication of Application",""
+"failed","Tue Sep 27 10:54:27 PKT 2022","Tue Sep 27 10:55:24 PKT 2022","56697","firefox","designer-app\tests\newApplications.spec.ts","","","","Scenario: To verify creation and publication of Application",""
+"passed","Tue Sep 27 10:55:24 PKT 2022","Tue Sep 27 10:55:49 PKT 2022","24952","firefox","designer-app\tests\newApplications.spec.ts","","","","TC_04, 06, 07 Verify when you click on Create and New Entity button, it creates the Entity and resets the Create entity pop up fields",""
+"passed","Tue Sep 27 10:56:42 PKT 2022","Tue Sep 27 10:56:59 PKT 2022","17631","Google Chrome","designer-app\tests\newApplications.spec.ts","","","","TC_04, 06, 07 Verify when you click on Create and New Entity button, it creates the Entity and resets the Create entity pop up fields",""
